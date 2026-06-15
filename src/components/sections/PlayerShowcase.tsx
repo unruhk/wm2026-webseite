@@ -20,14 +20,13 @@ export default function PlayerShowcase() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Erste Card direkt sichtbar
-      gsap.set(".player-card-0", { opacity: 1, y: 0 });
+      // Alle Karten auf opacity:0 setzen, erste sichtbar machen
+      players.forEach((_, i) => gsap.set(`.player-card-${i}`, { opacity: i === 0 ? 1 : 0, y: 0 }));
 
       ScrollTrigger.create({
         trigger: sectionRef.current,
         pin: true,
         start: "top top",
-        // Jeder Spieler bekommt eine volle Viewport-Höhe Scroll-Weg
         end: () => `+=${players.length * window.innerHeight}`,
         scrub: 0.8,
         invalidateOnRefresh: true,
@@ -42,15 +41,26 @@ export default function PlayerShowcase() {
           currentIndexRef.current = newIndex;
           setCurrentIndex(newIndex);
 
+          // Laufende Tweens stoppen, damit sich Animationen nicht stapeln
+          gsap.killTweensOf(`.player-card-${prevIndex}`);
+          gsap.killTweensOf(`.player-card-${newIndex}`);
+
+          // Alle anderen Karten sofort unsichtbar machen
+          players.forEach((_, i) => {
+            if (i !== prevIndex && i !== newIndex) {
+              gsap.set(`.player-card-${i}`, { opacity: 0, y: 0 });
+            }
+          });
+
           // Alte Card ausblenden
           gsap.to(`.player-card-${prevIndex}`, {
-            opacity: 0, y: -24, duration: 0.28, ease: "power2.in",
+            opacity: 0, y: -24, duration: 0.25, ease: "power2.in",
           });
           // Neue Card einblenden
           gsap.fromTo(
             `.player-card-${newIndex}`,
             { opacity: 0, y: 32 },
-            { opacity: 1, y: 0, duration: 0.5, delay: 0.18, ease: "power3.out" }
+            { opacity: 1, y: 0, duration: 0.45, delay: 0.15, ease: "power3.out" }
           );
         },
       });
@@ -96,7 +106,7 @@ export default function PlayerShowcase() {
             <div
               key={p.id}
               className={`player-card-${i} absolute inset-0 flex flex-col justify-center gap-5 lg:pr-12`}
-              style={{ opacity: i === 0 ? 1 : 0 }}
+              style={{ opacity: 0 }}
             >
               {/* Positions-Badge */}
               <div className="flex items-center gap-3">
