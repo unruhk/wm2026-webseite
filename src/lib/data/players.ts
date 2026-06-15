@@ -8,6 +8,8 @@ export type Player = {
   assists: number;
   caps: number;
   accentColor: string;
+  // Normalisierte Position im Spielfeld (x: 0=links, 1=rechts / y: 0=Angriff, 1=Abwehr)
+  fieldPosition: { x: number; y: number };
 };
 
 export const players: Player[] = [
@@ -21,6 +23,7 @@ export const players: Player[] = [
     assists: 0,
     caps: 42,
     accentColor: "#AAAAAA",
+    fieldPosition: { x: 0.5, y: 0.93 },
   },
   {
     id: 2,
@@ -32,6 +35,7 @@ export const players: Player[] = [
     assists: 2,
     caps: 67,
     accentColor: "#FFFFFF",
+    fieldPosition: { x: 0.38, y: 0.76 },
   },
   {
     id: 3,
@@ -43,6 +47,7 @@ export const players: Player[] = [
     assists: 11,
     caps: 89,
     accentColor: "#D4AF37",
+    fieldPosition: { x: 0.5, y: 0.5 },
   },
   {
     id: 4,
@@ -54,6 +59,7 @@ export const players: Player[] = [
     assists: 6,
     caps: 54,
     accentColor: "#D4AF37",
+    fieldPosition: { x: 0.85, y: 0.35 },
   },
   {
     id: 5,
@@ -65,5 +71,6 @@ export const players: Player[] = [
     assists: 5,
     caps: 73,
     accentColor: "#DD0000",
+    fieldPosition: { x: 0.5, y: 0.13 },
   },
 ];
