@@ -124,7 +124,7 @@ function StatCard({ label, value, sub }: { label: string; value: string; sub: st
 
 function MatchRow({ match }: { match: DbMatch }) {
   const resultInfo = match.result ? RESULT_LABEL[match.result] : null;
-  const score = match.home_score !== null && match.away_score !== null
+  const score = match.home_score != null && match.away_score != null
     ? `${match.home_score}:${match.away_score}`
     : null;
 

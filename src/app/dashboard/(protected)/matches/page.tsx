@@ -157,13 +157,14 @@ function MatchCard({ match, onEdit, onDelete, onResult }: {
   onResult: () => void;
 }) {
   const isPast    = new Date(match.match_date) < new Date();
-  const hasResult = match.result !== null;
+  // != null fängt sowohl null als auch undefined ab (falls Migration noch nicht gelaufen)
+  const hasResult = match.result != null && match.home_score != null && match.away_score != null;
   const rc = hasResult ? RESULT_CONFIG[match.result!] : null;
   const score = hasResult ? `${match.home_score}:${match.away_score}` : null;
   let extraScore = "";
-  if (hasResult && match.is_ko_round && match.extra_time_home !== null) {
+  if (hasResult && match.is_ko_round && match.extra_time_home != null) {
     extraScore = ` (n.V. ${match.extra_time_home}:${match.extra_time_away})`;
-    if (match.penalties_home !== null) extraScore += ` (n.E. ${match.penalties_home}:${match.penalties_away})`;
+    if (match.penalties_home != null) extraScore += ` (n.E. ${match.penalties_home}:${match.penalties_away})`;
   }
 
   return (
