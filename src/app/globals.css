@@ -24,8 +24,3 @@ body {
   from { transform: scale(0.65); opacity: 0; }
   to   { transform: scale(1);    opacity: 0.92; }
 }
-
-@keyframes torIn {
-  from { transform: scale(0.5) rotate(-4deg); opacity: 0; }
-  to   { transform: scale(1)   rotate(0deg);  opacity: 1; }
-}
